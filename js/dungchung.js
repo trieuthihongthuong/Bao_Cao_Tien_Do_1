@@ -14,7 +14,6 @@ function setListAdmin(l) {
 
 // Hàm khởi tạo, tất cả các trang đều cần
 function khoiTao() {
-    // get data từ localstorage
     list_products = getListProducts() || list_products;
     adminInfo = getListAdmin() || adminInfo;
 
@@ -22,8 +21,6 @@ function khoiTao() {
     capNhat_ThongTin_CurrentUser();
     addEventCloseAlertButton();
 }
-
-// ========= Các hàm liên quan tới danh sách sản phẩm =========
 // Localstorage cho dssp: 'ListProducts
 function setListProducts(newList) {
     window.localStorage.setItem('ListProducts', JSON.stringify(newList));
@@ -59,15 +56,9 @@ function timKiemTheoMa(list, ma) {
         if (l.masp == ma) return l;
     }
 }
-
-// copy 1 object, do trong js ko có tham biến , tham trị rõ ràng
-// nên dùng bản copy để chắc chắn ko ảnh hưởng tới bản chính
 function copyObject(o) {
     return JSON.parse(JSON.stringify(o));
 }
-
-// ============== ALert Box ===============
-// div có id alert được tạo trong hàm addFooter
 function addAlertBox(text, bgcolor, textcolor, time) {
     var al = document.getElementById('alert');
     al.childNodes[0].nodeValue = text;
@@ -92,7 +83,6 @@ function addEventCloseAlertButton() {
         });
 }
 
-// ================ Cart Number + Thêm vào Giỏ hàng ======================
 function animateCartNumber() {
     // Hiệu ứng cho icon giỏ hàng
     var cn = document.getElementsByClassName('cart-number')[0];
@@ -106,46 +96,6 @@ function animateCartNumber() {
     }, 1200);
 }
 
-function Hang(masp, tensp) {
-    var user = getCurrentUser();
-    if (!user) {
-        alert('Bạn cần đăng nhập để mua hàng !');
-        showTaiKhoan(true);
-        return;
-    }
-    if (user.off) {
-        alert('Tài khoản của bạn hiện đang bị khóa nên không thể mua hàng!');
-        addAlertBox('Tài khoản của bạn đã bị khóa bởi Admin.', '#aa0000', '#fff', 10000);
-        return;
-    }
-    var t = new Date();
-    var daCoSanPham = false;;
-
-    for (var i = 0; i < user.products.length; i++) { // check trùng sản phẩm
-        if (user.products[i].ma == masp) {
-            user.products[i].soluong++;
-            daCoSanPham = true;
-            break;
-        }
-    }
-
-    if (!daCoSanPham) { // nếu không trùng thì mới thêm sản phẩm vào user.products
-        user.products.push({
-            "ma": masp,
-            "soluong": 1,
-            "date": t
-        });
-    }
-
-    animateCartNumber();
-    addAlertBox('Đã thêm ' + tensp + ' vào giỏ.', '#17c671', '#fff', 3500);
-
-    setCurrentUser(user); // cập nhật giỏ hàng cho user hiện tại
-    updateListUser(user); // cập nhật list user
-    capNhat_ThongTin_CurrentUser(); // cập nhật giỏ hàng
-}
-
-// ============================== TÀI KHOẢN ============================
 
 // Hàm get set cho người dùng hiện tại đã đăng nhập
 function getCurrentUser() {
@@ -169,8 +119,6 @@ function getListUser() {
 function setListUser(l) {
     window.localStorage.setItem('ListUser', JSON.stringify(l));
 }
-
-// Sau khi chỉnh sửa 1 user 'u' thì cần hàm này để cập nhật lại vào ListUser
 function updateListUser(u, newData) {
     var list = getListUser();
     for (var i = 0; i < list.length; i++) {
@@ -285,50 +233,36 @@ function checkTaiKhoan() {
 function setupEventTaiKhoan() {
     var taikhoan = document.getElementsByClassName('taikhoan')[0];
     var list = taikhoan.getElementsByTagName('input');
-
-    // Tạo eventlistener cho input để tạo hiệu ứng label
-    // Gồm 2 event onblur, onfocus được áp dụng cho từng input trong list bên trên
     ['blur', 'focus'].forEach(function (evt) {
         for (var i = 0; i < list.length; i++) {
             list[i].addEventListener(evt, function (e) {
-                var label = this.previousElementSibling; // lấy element ĐỨNG TRƯỚC this, this ở đây là input
-                if (e.type === 'blur') { // khi ấn chuột ra ngoài
-                    if (this.value === '') { // không có value trong input thì đưa label lại như cũ
+                var label = this.previousElementSibling; 
+                if (e.type === 'blur') { 
+                    if (this.value === '') { 
                         label.classList.remove('active');
                         label.classList.remove('highlight');
-                    } else { // nếu có chữ thì chỉ tắt hightlight chứ không tắt active, active là dịch chuyển lên trên
+                    } else { 
                         label.classList.remove('highlight');
                     }
-                } else if (e.type === 'focus') { // khi focus thì label active + hightlight
+                } else if (e.type === 'focus') { 
                     label.classList.add('active');
                     label.classList.add('highlight');
                 }
             });
         }
     })
-
-    // Event chuyển tab login-signup
     var tab = document.getElementsByClassName('tab');
     for (var i = 0; i < tab.length; i++) {
         var a = tab[i].getElementsByTagName('a')[0];
         a.addEventListener('click', function (e) {
-            e.preventDefault(); // tắt event mặc định
-
-            // Thêm active(màu xanh lá) cho li chứa tag a này => ấn login thì login xanh, signup thì signup sẽ xanh
+            e.preventDefault(); 
             this.parentElement.classList.add('active');
-
-            // Sau khi active login thì phải tắt active sigup và ngược lại
-            // Trường hợp a này thuộc login => <li>Login</li> sẽ có nextElement là <li>SignUp</li>
             if (this.parentElement.nextElementSibling) {
                 this.parentElement.nextElementSibling.classList.remove('active');
             }
-            // Trường hợp a này thuộc signup => <li>SignUp</li> sẽ có .previousElement là <li>Login</li>
             if (this.parentElement.previousElementSibling) {
                 this.parentElement.previousElementSibling.classList.remove('active');
             }
-
-            // Ẩn phần nhập của login nếu ấn signup và ngược lại
-            // href của 2 tab signup và login là #signup và #login -> tiện cho việc getElement dưới đây
             var target = this.href.split('#')[1];
             document.getElementById(target).style.display = 'block';
 
@@ -337,8 +271,6 @@ function setupEventTaiKhoan() {
         })
     }
 
-    // Đoạn code tạo event trên được chuyển về js thuần từ code jquery
-    // Code jquery cho phần tài khoản được lưu ở cuối file này
 }
 
 // Cập nhật số lượng hàng trong giỏ hàng + Tên current user
@@ -373,8 +305,6 @@ function getSoLuongSanPhamTrongUser(tenSanPham, user) {
     }
     return 0;
 }
-
-// ==================== Những hàm khác ===================== 
 function numToString(num, char) {
     return num.toLocaleString().split(',').join(char || '.');
 }
@@ -406,29 +336,15 @@ function autocomplete(inp, arr) {
             
             this.parentNode.appendChild(a);
 
-            /*for each item in the array...*/
             for (i = 0; i < arr.length; i++) {
-                /*check if the item starts with the same letters as the text field value:*/
                 if (arr[i].name.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-
-                    /*create a DIV element for each matching element:*/
                     b = document.createElement("DIV");
-
-                    /*make the matching letters bold:*/
                     b.innerHTML = "<strong>" + arr[i].name.substr(0, val.length) + "</strong>";
                     b.innerHTML += arr[i].name.substr(val.length);
-
-                    /*insert a input field that will hold the current array item's value:*/
                     b.innerHTML += "<input type='hidden' value='" + arr[i].name + "'>";
-
-                    /*execute a function when someone clicks on the item value (DIV element):*/
                     b.addEventListener("click", function (e) {
-                        /*insert the value for the autocomplete text field:*/
                         inp.value = this.getElementsByTagName("input")[0].value;
                         inp.focus();
-
-                        /*close the list of autocompleted values,
-                        (or any other open lists of autocompleted values:*/
                         closeAllLists();
                     });
                     a.appendChild(b);

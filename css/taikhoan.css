@@ -46,7 +46,6 @@
 .taikhoan,
 .taikhoan * {
   box-sizing: border-box;
-  /* box sizing cho .taikhoan và mọi thằng trong .taikhoan */
 }
 
 .taikhoan a {
@@ -122,20 +121,16 @@
   transition: all 0.25s ease;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  /* https://www.w3schools.com/cssref/playit.asp?filename=playcss_backface-visibility */
   pointer-events: none;
-  /* kiến label không thể ấn => ấn vào input sẽ ko bị vướng label */
   font-size: 22px;
 }
 
 .taikhoan label .req {
-  /* dấu sao * */
   margin: 2px;
   color: #1ab188;
 }
 
 .taikhoan label.active {
-  /* dịch chuyển label lên, khi focus vào input */
   -webkit-transform: translateY(-25px);
   transform: translateY(-25px);
   left: 2px;
@@ -143,12 +138,10 @@
 }
 
 .taikhoan label.active .req {
-  /* khi dịch chuyển label thì cùng lúc ẩn dấu sao đi */
   opacity: 0;
 }
 
 .taikhoan label.highlight {
-  /* đổi màu label đc dịch lên */
   color: #ffffff;
 }
 
@@ -205,7 +198,7 @@
   border-radius: 0;
   padding: 15px 0;
   font-size: 2rem;
-  /* https://www.w3schools.com/cssref/css_units.asp */
+ 
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: .1em;

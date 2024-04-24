@@ -20,8 +20,6 @@
     vertical-align: middle;
     margin-top: -3px;
 }
-
-/* Dropdown From w3 */
 	.dropbtn {
 	    background-color: #444;
 	    color: white;
@@ -34,7 +32,6 @@
 		transition-duration: .3s;
 	}
 	.dropbtn:after {
-		/* kí tự mũi tên > */
 	    content: ' \25B7';
 	}
 	.dropdown:hover .dropbtn:after{
@@ -52,7 +49,6 @@
 	    border-radius: 5px;
 	    background-color: rgba(255, 255, 255, .8);
 		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
-		/* mặc địng là xoay 90 độ => bị ẩn đi */
 	    transform: rotateX(90deg);
 	    transition-duration: .3s;
 	}
@@ -67,7 +63,6 @@
 		background-color: #555 
 	}
 	.dropdown:hover .dropdown-content {
-	    /* khi hover vào thì cần hiện content ra => xoay 0 độ => trờ về như cũ */
 	    transform: rotateY(0deg);
 	}
 	.dropdown:hover .dropbtn {
@@ -77,7 +72,6 @@
 .choosedFilter { margin: 10px auto; }
 .choosedFilter i { transition-duration: .3s; }
 .choosedFilter a:hover > h3 > i { color: red; }
-/* .choosedFilter a:hover > h3 { text-decoration: line-through; } */
 .choosedFilter a {
     font-size: 12px;
     padding: 6px;
@@ -97,7 +91,7 @@
 	margin: 50px 0;
 	border-radius: 5px;
 	border: 2px solid #ff4d00; 
-	box-sizing: border-box; /* dùng để width ko vượt ra ngoài khi có border */
+	box-sizing: border-box; 
 }
 
 .khungSanPham h3.tenKhung {

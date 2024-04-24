@@ -47,9 +47,6 @@ hr {
     -ms-flex-pack: center;
     justify-content: center;
 }
-
-/* Use for auto clear float */
-/* ====== https://css-tricks.com/snippets/css/clear-fix/ ======== */
 .group:before,
 .group:after {
     content: "";
@@ -62,12 +59,11 @@ hr {
 
 .group {
     zoom: 1;
-    /* For IE 6/7 (trigger hasLayout) */
 }
 
 /* =========   Alert ===============*/
 #alert {
-    z-index: 200; /* luôn trên cùng (đè lên những thứ khác) */
+    z-index: 200; 
     display: block;
     position: fixed;
     bottom: 40px;
@@ -93,8 +89,6 @@ hr {
     -o-transition: 0.3s;
     transition: 0.3s;
 }
-
-/* ===== End clear float ====== */
 
 #goto-top-page {
     position: fixed;
@@ -138,7 +132,6 @@ hr {
 }
 
 /* ==================== css thêm , chưa sử dụng ========================= */
-/* tooltip https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_copy_clipboard2 */
 .tooltip {
     position: absolute;
     display: inline-block;
@@ -178,8 +171,6 @@ hr {
     visibility: visible;
     opacity: 1;
 }
-
-/* animation ping from thegioididong */
 .dot {
     width: 10px;
     height: 10px;
